@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم — بارد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #38b6e8; --sky-light: #e8f6fd; --sky-mid: #b3e0f5;
+      --navy: #0d2d4e; --navy-light: #1a4a6e;
+      --white: #fff; --off: #f5f9fd; --grey: #6b7a8d;
+      --grey-light: #e4ecf3; --text: #1a2a3a;
+      --green: #2ecc71; --red: #e74c3c;
+      --radius: 12px; --shadow: 0 2px 16px rgba(13,45,78,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', sans-serif; direction: rtl;
+      background: var(--off); color: var(--text); min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ---- TOP BAR ---- */
+    .topbar {
+      background: var(--navy); padding: 0 24px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; color: var(--white); font-weight: 900; font-size: 1.3rem; }
+    .topbar-logo span { color: var(--sky); font-size: 1.5rem; }
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+    .topbar-actions a { color: var(--sky-mid); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .topbar-actions a:hover { color: var(--white); }
+    .logout-btn {
+      background: rgba(255,255,255,0.1); color: var(--white); border: none;
+      padding: 7px 16px; border-radius: 8px; cursor: pointer;
+      font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover { background: var(--red); }
+
+    /* ---- LAYOUT ---- */
+    .dash-body { display: flex; flex: 1; min-height: 0; }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 220px; background: var(--white); border-left: 1px solid var(--grey-light);
+      padding: 24px 0; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .sidebar-label {
+      font-size: 0.72rem; font-weight: 800; color: var(--grey);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 10px 20px 4px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 20px; cursor: pointer; border-radius: 0;
+      color: var(--grey); font-weight: 600; font-size: 0.92rem;
+      transition: all 0.2s; border-right: 3px solid transparent;
+      text-decoration: none;
+    }
+    .nav-item:hover { background: var(--sky-light); color: var(--navy); }
+    .nav-item.active { background: var(--sky-light); color: var(--sky); border-right-color: var(--sky); }
+    .nav-icon { font-size: 1.1rem; width: 22px; text-align: center; }
+
+    /* ---- MAIN ---- */
+    .main-content { flex: 1; padding: 28px; overflow-y: auto; }
+    .page-title { font-size: 1.5rem; font-weight: 900; color: var(--navy); margin-bottom: 22px; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ---- CARDS ---- */
+    .stat-cards {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius); padding: 22px;
+      box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px;
+    }
+    .stat-card .s-num { font-size: 2rem; font-weight: 900; color: var(--navy); }
+    .stat-card .s-label { color: var(--grey); font-size: 0.9rem; font-weight: 600; }
+    .stat-card .s-icon { font-size: 1.5rem; margin-bottom: 6px; }
+
+    /* ---- FORMS ---- */
+    .panel-box {
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow); margin-bottom: 24px;
+    }
+    .panel-box h3 { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 700; color: var(--navy); margin-bottom: 6px; font-size: 0.88rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 14px; border-radius: 9px;
+      border: 2px solid var(--grey-light); font-family: 'Cairo', sans-serif;
+      font-size: 0.92rem; color: var(--text); background: var(--off);
+      outline: none; transition: all 0.22s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--sky); background: var(--white);
+      box-shadow: 0 0 0 3px rgba(56,182,232,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-note { font-size: 0.8rem; color: var(--grey); margin-top: 5px; }
+
+    .btn {
+      padding: 10px 22px; border-radius: 9px; border: none;
+      font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.92rem;
+      cursor: pointer; transition: all 0.22s;
+    }
+    .btn-primary { background: var(--sky); color: var(--white); }
+    .btn-primary:hover { background: var(--navy); }
+    .btn-danger { background: #fdecea; color: var(--red); }
+    .btn-danger:hover { background: var(--red); color: var(--white); }
+    .btn-outline { background: transparent; color: var(--sky); border: 2px solid var(--sky); }
+    .btn-outline:hover { background: var(--sky); color: var(--white); }
+    .btn-sm { padding: 6px 14px; font-size: 0.82rem; }
+
+    .alert {
+      padding: 12px 16px; border-radius: 9px; margin-bottom: 16px;
+      font-weight: 600; font-size: 0.9rem; display: none;
+    }
+    .alert-success { background: #e8f8f0; border: 1.5px solid var(--green); color: #1e8449; }
+    .alert-error { background: #fdecea; border: 1.5px solid var(--red); color: var(--red); }
+
+    /* ---- GALLERY GRID ---- */
+    .admin-gallery {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;
+      margin-top: 20px;
+    }
+    .admin-gallery-item {
+      border-radius: var(--radius); overflow: hidden; position: relative;
+      aspect-ratio: 4/3; background: var(--grey-light);
+    }
+    .admin-gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .admin-gallery-item .item-caption {
+      position: absolute; bottom: 0; right: 0; left: 0;
+      background: rgba(13,45,78,0.8); color: var(--white);
+      font-size: 0.75rem; padding: 6px 8px; font-weight: 600;
+    }
+    .admin-gallery-item .del-btn {
+      position: absolute; top: 6px; left: 6px;
+      background: var(--red); color: var(--white); border: none;
+      border-radius: 6px; padding: 3px 8px; font-size: 0.75rem;
+      cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 700;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .admin-gallery-item:hover .del-btn { opacity: 1; }
+
+    /* ---- POSTS LIST ---- */
+    .posts-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .post-item {
+      background: var(--off); border-radius: var(--radius);
+      padding: 16px; border: 1px solid var(--grey-light);
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    }
+    .post-item-body h4 { color: var(--navy); font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
+    .post-item-body p { color: var(--grey); font-size: 0.82rem; line-height: 1.5; }
+    .post-item-meta { color: var(--sky); font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; }
+    .post-item-img { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+
+    /* ---- SETTINGS ---- */
+    .settings-section { margin-bottom: 32px; }
+    .settings-section h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 14px; }
+
+    /* ---- HERO PREVIEW ---- */
+    .hero-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; }
+
+    /* FILE UPLOAD AREA */
+    .file-drop {
+      border: 2px dashed var(--grey-light); border-radius: 10px;
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s; background: var(--off);
+    }
+    .file-drop:hover { border-color: var(--sky); background: var(--sky-light); }
+    .file-drop input { display: none; }
+    .file-drop .drop-icon { font-size: 2rem; margin-bottom: 8px; }
+    .file-drop p { color: var(--grey); font-size: 0.88rem; }
+    .file-preview { display: none; margin-top: 12px; }
+    .file-preview img { max-width: 100%; max-height: 180px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo"><span>❄</span> بارد — لوحة التحكم</div>
+  <div class="topbar-actions">
+    <a href="../index.html" target="_blank">← مشاهدة الموقع</a>
+    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+  </div>
+</div>
+
+<div class="dash-body">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">القائمة الرئيسية</div>
+    <a class="nav-item active" onclick="switchTab('dashboard')" href="#">
+      <span class="nav-icon">📊</span> لوحة المعلومات
+    </a>
+    <a class="nav-item" onclick="switchTab('posts')" href="#">
+      <span class="nav-icon">📝</span> المقالات والمنشورات
+    </a>
+    <a class="nav-item" onclick="switchTab('gallery')" href="#">
+      <span class="nav-icon">🖼️</span> معرض الصور
+    </a>
+    <a class="nav-item" onclick="switchTab('hero')" href="#">
+      <span class="nav-icon">🖼</span> صورة البانر
+    </a>
+    <div class="sidebar-label" style="margin-top:12px">الإعدادات</div>
+    <a class="nav-item" onclick="switchTab('settings')" href="#">
+      <span class="nav-icon">⚙️</span> الإعدادات
+    </a>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ===== DASHBOARD TAB ===== -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="page-title">لوحة المعلومات</div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="s-icon">🖼️</div>
+          <div class="s-num" id="statImages">0</div>
+          <div class="s-label">صور في المعرض</div>
+        </div>
+        <div class="stat-card">
+          <div class="s-icon">📝</div>
+          <div class="s-num" id="statPosts">0</div>
+          <div class="s-label">مقالات ومنشورات</div>
+        </div>
+        <div class="stat-card">
+          <div class="s-icon">🕐</div>
+          <div class="s-num" id="statTime">—</div>
+          <div class="s-label">آخر تحديث</div>
+        </div>
+      </div>
+      <div class="panel-box">
+        <h3>🚀 نصائح سريعة</h3>
+        <ul style="color:var(--grey);font-size:0.93rem;line-height:2.2;padding-right:16px;">
+          <li>استخدم قسم <strong>المقالات</strong> لنشر نصائح وأخبار تظهر في الموقع</li>
+          <li>أضف صوراً من أعمالك الميدانية في قسم <strong>معرض الصور</strong></li>
+          <li>يمكنك تغيير <strong>الصورة الرئيسية</strong> للبانر في أي وقت</li>
+          <li>جميع البيانات محفوظة محلياً — ستُنقل إلى Supabase لاحقاً</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== POSTS TAB ===== -->
+    <div class="tab-panel" id="tab-posts">
+      <div class="page-title">المقالات والمنشورات</div>
+      <div class="panel-box">
+        <h3>➕ إضافة مقال / منشور جديد</h3>
+        <div id="postAlert" class="alert alert-success">✅ تم حفظ المقال بنجاح!</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>عنوان المقال *</label>
+            <input type="text" id="postTitle" placeholder="عنوان المقال أو المنشور" />
+          </div>
+          <div class="form-group">
+            <label>التصنيف</label>
+            <select id="postCat">
+              <option>نصيحة</option>
+              <option>خبر</option>
+              <option>عرض</option>
+              <option>تحذير</option>
+              <option>معلومة</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>محتوى المقال *</label>
+          <textarea id="postContent" rows="4" placeholder="اكتب محتوى المقال هنا..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>رابط صورة (اختياري)</label>
+          <input type="url" id="postImageUrl" placeholder="https://... أو اترك فارغاً" />
+          <p class="form-note">💡 يمكنك رفع الصورة على موقع مثل imgbb.com ثم نسخ الرابط هنا</p>
+        </div>
+        <div class="form-group">
+          <label>أو رفع صورة مباشرة</label>
+          <div class="file-drop" onclick="document.getElementById('postImageFile').click()">
+            <div class="drop-icon">📁</div>
+            <p>انقر لاختيار صورة</p>
+            <input type="file" id="postImageFile" accept="image/*" onchange="previewPostImage(event)" />
+          </div>
+          <div class="file-preview" id="postImagePreview">
+            <img id="postPreviewImg" src="" alt="معاينة" />
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addPost()">💾 نشر المقال</button>
+      </div>
+
+      <div class="panel-box">
+        <h3>📋 المقالات المنشورة</h3>
+        <div class="posts-list" id="postsList">
+          <p style="color:var(--grey);text-align:center;padding:20px">لا توجد مقالات بعد. أضف مقالك الأول!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GALLERY TAB ===== -->
+    <div class="tab-panel" id="tab-gallery">
+      <div class="page-title">معرض الصور</div>
+      <div class="panel-box">
+        <h3>➕ إضافة صورة للمعرض</h3>
+        <div id="galleryAlert" class="alert alert-success">✅ تم إضافة الصورة بنجاح!</div>
+        <div class="form-group">
+          <label>رفع صورة مباشرة *</label>
+          <div class="file-drop" onclick="document.getElementById('galleryImageFile').click()">
+            <div class="drop-icon">🖼️</div>
+            <p>انقر لرفع صورة من جهازك</p>
+            <input type="file" id="galleryImageFile" accept="image/*" onchange="previewGalleryImage(event)" />
+          </div>
+          <div class="file-preview" id="galleryImagePreview">
+            <img id="galleryPreviewImg" src="" alt="معاينة" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>أو أدخل رابط صورة</label>
+          <input type="url" id="galleryImgUrl" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>وصف / تسمية الصورة</label>
+          <input type="text" id="galleryCaption" placeholder="مثال: تركيب مكيف — بغداد" />
+        </div>
+        <button class="btn btn-primary" onclick="addGalleryImage()">➕ إضافة للمعرض</button>
+      </div>
+
+      <div class="panel-box">
+        <h3>🖼️ الصور المضافة</h3>
+        <div class="admin-gallery" id="adminGallery">
+          <p style="color:var(--grey);font-size:0.9rem;grid-column:1/-1;text-align:center;padding:20px">
+            لا توجد صور بعد. أضف صورك الأولى!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HERO IMAGE TAB ===== -->
+    <div class="tab-panel" id="tab-hero">
+      <div class="page-title">صورة البانر الرئيسي</div>
+      <div class="panel-box">
+        <h3>الصورة الحالية</h3>
+        <img src="../images/hero.png" alt="صورة البانر" class="hero-preview" id="heroPrevCurrent" />
+        <p style="color:var(--grey);font-size:0.9rem">هذه هي الصورة الظاهرة حالياً في البانر الرئيسي.</p>
+      </div>
+      <div class="panel-box">
+        <h3>🔄 تغيير صورة البانر</h3>
+        <div id="heroAlert" class="alert alert-success">✅ تم تغيير صورة البانر!</div>
+        <div class="form-group">
+          <label>رفع صورة جديدة</label>
+          <div class="file-drop" onclick="document.getElementById('heroFile').click()">
+            <div class="drop-icon">🌄</div>
+            <p>انقر لاختيار صورة البانر الجديدة</p>
+            <p style="font-size:0.8rem;margin-top:4px">يُفضَّل أبعاد أفقية عريضة (مثال: 1320×700)</p>
+            <input type="file" id="heroFile" accept="image/*" onchange="previewHeroImage(event)" />
+          </div>
+          <div class="file-preview" id="heroPreview">
+            <img id="heroPreviewImg" src="" alt="معاينة" style="max-height:220px;border-radius:10px;margin-top:12px" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>أو أدخل رابط URL للصورة</label>
+          <input type="url" id="heroUrlInput" placeholder="https://..." />
+        </div>
+        <button class="btn btn-primary" onclick="saveHeroImage()">🖼 حفظ صورة البانر</button>
+        <button class="btn btn-outline" style="margin-right:10px" onclick="resetHeroImage()">↩ استعادة الصورة الافتراضية</button>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS TAB ===== -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="page-title">الإعدادات</div>
+      <div class="panel-box settings-section">
+        <h4>🔐 تغيير كلمة مرور المسؤول</h4>
+        <div id="passAlert" class="alert alert-success">✅ تم تغيير كلمة المرور!</div>
+        <div class="form-group">
+          <label>كلمة المرور الجديدة</label>
+          <input type="password" id="newPass" placeholder="أدخل كلمة المرور الجديدة" />
+        </div>
+        <div class="form-group">
+          <label>تأكيد كلمة المرور</label>
+          <input type="password" id="confirmPass" placeholder="أعد إدخال كلمة المرور" />
+        </div>
+        <div id="passError" class="alert alert-error">❌ كلمتا المرور غير متطابقتين</div>
+        <button class="btn btn-primary" onclick="changePassword()">💾 حفظ كلمة المرور</button>
+      </div>
+      <div class="panel-box settings-section">
+        <h4>🗑️ إدارة البيانات</h4>
+        <p style="color:var(--grey);font-size:0.9rem;margin-bottom:14px">
+          حذف جميع الصور أو المقالات نهائياً. هذا الإجراء لا يمكن التراجع عنه.
+        </p>
+        <button class="btn btn-danger btn-sm" onclick="clearAllImages()">🗑 حذف كل صور المعرض</button>
+        <button class="btn btn-danger btn-sm" style="margin-right:10px" onclick="clearAllPosts()">🗑 حذف كل المقالات</button>
+      </div>
+      <div class="panel-box settings-section">
+        <h4>☁️ Supabase — قادم قريباً</h4>
+        <p style="color:var(--grey);font-size:0.9rem;line-height:1.7">
+          قريباً ستتمكن من ربط هذه اللوحة بقاعدة بيانات Supabase لحفظ الصور والمقالات بشكل دائم على السحابة.
+          ستُضاف خانات إدخال مفتاح Supabase API وعنوان المشروع هنا.
+        </p>
+        <div class="form-group" style="margin-top:14px">
+          <label>Supabase Project URL</label>
+          <input type="url" id="sbUrl" placeholder="https://xxxx.supabase.co" disabled />
+        </div>
+        <div class="form-group">
+          <label>Supabase Anon Key</label>
+          <input type="text" id="sbKey" placeholder="eyJhbGci..." disabled />
+        </div>
+        <button class="btn btn-outline" disabled style="opacity:0.5">قريباً — ربط Supabase</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ======== AUTH CHECK ========
+  if (!sessionStorage.getItem('barid_admin_logged_in')) {
+    window.location.href = 'index.html';
+  }
+
+  function logout() {
+    sessionStorage.removeItem('barid_admin_logged_in');
+    window.location.href = 'index.html';
+  }
+
+  // ======== TABS ========
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + name)?.classList.add('active');
+    event.currentTarget.classList.add('active');
+    if (name === 'gallery') renderAdminGallery();
+    if (name === 'posts') renderPostsList();
+    if (name === 'dashboard') updateStats();
+  }
+
+  // ======== DATA HELPERS ========
+  const GALLERY_KEY = 'barid_gallery';
+  const POSTS_KEY = 'barid_posts';
+  const HERO_KEY = 'barid_hero_image';
+  const PASS_KEY = 'barid_admin_pass';
+
+  function getGallery() { return JSON.parse(localStorage.getItem(GALLERY_KEY) || '[]'); }
+  function saveGallery(data) { localStorage.setItem(GALLERY_KEY, JSON.stringify(data)); updateStats(); }
+  function getPosts() { return JSON.parse(localStorage.getItem(POSTS_KEY) || '[]'); }
+  function savePosts(data) { localStorage.setItem(POSTS_KEY, JSON.stringify(data)); updateStats(); }
+
+  function updateStats() {
+    const images = getGallery();
+    const posts = getPosts();
+    document.getElementById('statImages').textContent = images.length;
+    document.getElementById('statPosts').textContent = posts.length;
+    const now = new Date();
+    document.getElementById('statTime').textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  }
+
+  // ======== GALLERY ========
+  let galleryImageDataUrl = null;
+
+  function previewGalleryImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      galleryImageDataUrl = e.target.result;
+      document.getElementById('galleryPreviewImg').src = galleryImageDataUrl;
+      document.getElementById('galleryImagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function addGalleryImage() {
+    const url = galleryImageDataUrl || document.getElementById('galleryImgUrl').value.trim();
+    const caption = document.getElementById('galleryCaption').value.trim();
+    if (!url) { alert('يرجى رفع صورة أو إدخال رابط'); return; }
+    const gallery = getGallery();
+    gallery.push({ url, caption: caption || 'صورة من أعمالنا', id: Date.now() });
+    saveGallery(gallery);
+    document.getElementById('galleryCaption').value = '';
+    document.getElementById('galleryImgUrl').value = '';
+    document.getElementById('galleryImagePreview').style.display = 'none';
+    galleryImageDataUrl = null;
+    showAlert('galleryAlert');
+    renderAdminGallery();
+  }
+
+  function renderAdminGallery() {
+    const gallery = getGallery();
+    const container = document.getElementById('adminGallery');
+    if (gallery.length === 0) {
+      container.innerHTML = '<p style="color:var(--grey);font-size:0.9rem;grid-column:1/-1;text-align:center;padding:20px">لا توجد صور بعد.</p>';
+      return;
+    }
+    container.innerHTML = gallery.map((img, i) => `
+      <div class="admin-gallery-item">
+        <img src="${esc(img.url)}" alt="${esc(img.caption)}" loading="lazy" />
+        <div class="item-caption">${esc(img.caption)}</div>
+        <button class="del-btn" onclick="deleteGalleryImage(${i})">حذف</button>
+      </div>
+    `).join('');
+  }
+
+  function deleteGalleryImage(i) {
+    if (!confirm('حذف هذه الصورة؟')) return;
+    const gallery = getGallery();
+    gallery.splice(i, 1);
+    saveGallery(gallery);
+    renderAdminGallery();
+  }
+
+  function clearAllImages() {
+    if (!confirm('هل أنت متأكد من حذف جميع صور المعرض؟')) return;
+    saveGallery([]);
+    renderAdminGallery();
+  }
+
+  // ======== POSTS ========
+  let postImageDataUrl = null;
+
+  function previewPostImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      postImageDataUrl = e.target.result;
+      document.getElementById('postPreviewImg').src = postImageDataUrl;
+      document.getElementById('postImagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function addPost() {
+    const title = document.getElementById('postTitle').value.trim();
+    const content = document.getElementById('postContent').value.trim();
+    const cat = document.getElementById('postCat').value;
+    const imageUrl = postImageDataUrl || document.getElementById('postImageUrl').value.trim();
+    if (!title || !content) { alert('يرجى إدخال العنوان والمحتوى'); return; }
+    const posts = getPosts();
+    const now = new Date();
+    const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const dateStr = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+    posts.push({ title, content, category: cat, image: imageUrl || null, date: dateStr, id: Date.now() });
+    savePosts(posts);
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postContent').value = '';
+    document.getElementById('postImageUrl').value = '';
+    document.getElementById('postImagePreview').style.display = 'none';
+    postImageDataUrl = null;
+    showAlert('postAlert');
+    renderPostsList();
+  }
+
+  function renderPostsList() {
+    const posts = getPosts();
+    const container = document.getElementById('postsList');
+    if (posts.length === 0) {
+      container.innerHTML = '<p style="color:var(--grey);text-align:center;padding:20px">لا توجد مقالات بعد.</p>';
+      return;
+    }
+    container.innerHTML = posts.slice().reverse().map((post, ri) => {
+      const i = posts.length - 1 - ri;
+      return `
+        <div class="post-item">
+          <div style="flex:1">
+            <div class="post-item-meta">${esc(post.category)} · ${esc(post.date)}</div>
+            <div class="post-item-body">
+              <h4>${esc(post.title)}</h4>
+              <p>${esc(post.content.slice(0, 120))}${post.content.length > 120 ? '...' : ''}</p>
+            </div>
+          </div>
+          ${post.image ? `<img src="${esc(post.image)}" class="post-item-img" alt="صورة" />` : ''}
+          <button class="btn btn-danger btn-sm" onclick="deletePost(${i})">🗑</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function deletePost(i) {
+    if (!confirm('حذف هذا المقال؟')) return;
+    const posts = getPosts();
+    posts.splice(i, 1);
+    savePosts(posts);
+    renderPostsList();
+  }
+
+  function clearAllPosts() {
+    if (!confirm('حذف جميع المقالات؟')) return;
+    savePosts([]);
+    renderPostsList();
+  }
+
+  // ======== HERO IMAGE ========
+  let heroImageDataUrl = null;
+
+  function previewHeroImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      heroImageDataUrl = e.target.result;
+      document.getElementById('heroPreviewImg').src = heroImageDataUrl;
+      document.getElementById('heroPreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function saveHeroImage() {
+    const url = heroImageDataUrl || document.getElementById('heroUrlInput').value.trim();
+    if (!url) { alert('يرجى رفع صورة أو إدخال رابط'); return; }
+    localStorage.setItem(HERO_KEY, url);
+    document.getElementById('heroPrevCurrent').src = url;
+    showAlert('heroAlert');
+  }
+
+  function resetHeroImage() {
+    localStorage.removeItem(HERO_KEY);
+    document.getElementById('heroPrevCurrent').src = '../images/hero.png';
+    showAlert('heroAlert');
+  }
+
+  // ======== PASSWORD ========
+  function changePassword() {
+    const np = document.getElementById('newPass').value;
+    const cp = document.getElementById('confirmPass').value;
+    const err = document.getElementById('passError');
+    err.style.display = 'none';
+    if (!np) return;
+    if (np !== cp) { err.style.display = 'block'; return; }
+    localStorage.setItem(PASS_KEY, np);
+    document.getElementById('newPass').value = '';
+    document.getElementById('confirmPass').value = '';
+    showAlert('passAlert');
+  }
+
+  // ======== UTILS ========
+  function showAlert(id) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+  }
+
+  function esc(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+              .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ======== INIT ========
+  updateStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بارد - خدمة تصليح مكيفات الهواء في العراق</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">❄</span>
+        <span class="logo-text">بـــارد</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">الرئيسية</a></li>
+        <li><a href="#services">خدماتنا</a></li>
+        <li><a href="#gallery">معرض الأعمال</a></li>
+        <li><a href="#posts">أخبارنا</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+      <button class="cta-btn-sm" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
+      <button class="hamburger" id="hamburger" aria-label="القائمة">&#9776;</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#hero">الرئيسية</a>
+      <a href="#services">خدماتنا</a>
+      <a href="#gallery">معرض الأعمال</a>
+      <a href="#posts">أخبارنا</a>
+      <a href="#contact">تواصل معنا</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-image-wrap">
+      <img src="images/hero.png" alt="تصليح مكيفات الهواء" class="hero-img" id="heroImage" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content container">
+      <div class="hero-badge">🇮🇶 نخدم جميع محافظات العراق</div>
+      <h1 class="hero-title">
+        صيانة وتصليح<br/>
+        <span class="accent">مكيفات الهواء</span><br/>
+        <span class="subtitle-tag">احترافي · سريع · بأسعار مناسبة</span>
+      </h1>
+      <p class="hero-desc">فريق متخصص من الفنيين المعتمدين جاهز للوصول إليك في أقصر وقت ممكن. لا تتحمل الحر وحدك — نحن هنا.</p>
+      <div class="hero-actions">
+        <button class="cta-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <span>📞</span> احجز زيارة فنية
+        </button>
+        <a href="#services" class="ghost-btn">تعرف على خدماتنا</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">+٥٠٠</span><span class="stat-label">عميل راضٍ</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">٢٤/٧</span><span class="stat-label">خدمة متواصلة</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">+١٠</span><span class="stat-label">سنوات خبرة</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="container trust-inner">
+      <div class="trust-item"><span>🔧</span> تصليح مكيفات</div>
+      <div class="trust-item"><span>📦</span> تركيب مكيفات</div>
+      <div class="trust-item"><span>🧹</span> صيانة دورية</div>
+      <div class="trust-item"><span>⚡</span> طوارئ ٢٤ ساعة</div>
+      <div class="trust-item"><span>🛡️</span> ضمان على الأعمال</div>
+    </div>
+  </div>
+
+  <!-- WHY US -->
+  <section class="why-us section" id="why">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">لماذا تختارنا؟</span>
+        <h2>نقدّم أكثر من مجرد تصليح</h2>
+        <p>نحن نؤمن أن الراحة في المنزل حق لكل عائلة عراقية. لذلك نعمل بجدية لنكون عند مستوى ثقتكم دائماً.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">❄️</div>
+          <h3>سرعة الاستجابة</h3>
+          <p>نصل إليك خلال ساعات قليلة. الحر لا ينتظر ونحن كذلك.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">🏅</div>
+          <h3>فنيون معتمدون</h3>
+          <p>جميع فنيينا مدرّبون ومعتمدون على جميع ماركات التكييف.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">💰</div>
+          <h3>أسعار شفافة</h3>
+          <p>لا رسوم مخفية. تعرف التكلفة قبل بدء العمل.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">🛡️</div>
+          <h3>ضمان الجودة</h3>
+          <p>ضمان على جميع أعمال الإصلاح والتركيب لمدة ٣ أشهر.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">🧰</div>
+          <h3>قطع غيار أصلية</h3>
+          <p>نستخدم قطع الغيار الأصلية فقط لضمان أداء مثالي.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon" style="background:#e8f4fd">📍</div>
+          <h3>نصل إليك</h3>
+          <p>خدمة في الموقع في جميع أنحاء العراق — بغداد، البصرة، الكوت والمزيد.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">خدماتنا</span>
+        <h2>كل ما يحتاجه مكيفك</h2>
+        <p>من الصيانة البسيطة إلى الاستبدال الكامل — لدينا الحل المناسب لك.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80" alt="تصليح مكيفات" loading="lazy" />
+          <div class="service-card-body">
+            <h3>تصليح الأعطال</h3>
+            <p>تشخيص دقيق وإصلاح سريع لجميع أنواع أعطال التكييف.</p>
+            <ul>
+              <li>✓ المكيف لا يبرّد</li>
+              <li>✓ تسريب مياه</li>
+              <li>✓ أصوات غريبة</li>
+              <li>✓ مشاكل الكهرباء</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="تركيب مكيفات" loading="lazy" />
+          <div class="service-card-body">
+            <h3>تركيب المكيفات</h3>
+            <p>تركيب احترافي لجميع أنواع وماركات المكيفات بضمان كامل.</p>
+            <ul>
+              <li>✓ مكيفات سبليت</li>
+              <li>✓ مكيفات مركزية</li>
+              <li>✓ مكيفات شباك</li>
+              <li>✓ وحدات VRF</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&q=80" alt="صيانة دورية" loading="lazy" />
+          <div class="service-card-body">
+            <h3>الصيانة الدورية</h3>
+            <p>برامج صيانة دورية تطيل عمر جهازك وتحافظ على كفاءته.</p>
+            <ul>
+              <li>✓ تنظيف الفلاتر</li>
+              <li>✓ فحص غاز الفريون</li>
+              <li>✓ تعقيم الوحدة</li>
+              <li>✓ تقرير صحة الجهاز</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">كيف نعمل؟</span>
+        <h2>أربع خطوات بسيطة</h2>
+      </div>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">١</div>
+          <h4>اتصل أو أرسل رسالة</h4>
+          <p>تواصل معنا عبر الهاتف أو واتساب وأخبرنا بمشكلتك.</p>
+        </div>
+        <div class="step-arrow">←</div>
+        <div class="step">
+          <div class="step-num">٢</div>
+          <h4>حدد موعدك</h4>
+          <p>نحدد معك الوقت المناسب للزيارة الفنية.</p>
+        </div>
+        <div class="step-arrow">←</div>
+        <div class="step">
+          <div class="step-num">٣</div>
+          <h4>الفحص والتشخيص</h4>
+          <p>يصل الفني إلى موقعك ويشخص المشكلة بدقة.</p>
+        </div>
+        <div class="step-arrow">←</div>
+        <div class="step">
+          <div class="step-num">٤</div>
+          <h4>الإصلاح والضمان</h4>
+          <p>نُصلح المشكلة ونقدم لك ضماناً على العمل.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">أعمالنا</span>
+        <h2>معرض الصور</h2>
+        <p>نماذج من أعمالنا الميدانية في مختلف المحافظات العراقية.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Static sample images -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=500&q=80" alt="عمل ميداني" loading="lazy" />
+          <div class="gallery-caption">تركيب مكيف سبليت — بغداد</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=500&q=80" alt="صيانة" loading="lazy" />
+          <div class="gallery-caption">صيانة دورية — البصرة</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500&q=80" alt="فريق العمل" loading="lazy" />
+          <div class="gallery-caption">فريق العمل الميداني</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=500&q=80" alt="تصليح" loading="lazy" />
+          <div class="gallery-caption">تصليح وحدة خارجية — الكوت</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&q=80" alt="تنظيف" loading="lazy" />
+          <div class="gallery-caption">تنظيف وتعقيم — النجف</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="تركيب" loading="lazy" />
+          <div class="gallery-caption">تركيب احترافي — أربيل</div>
+        </div>
+      </div>
+      <!-- Dynamic images from admin will be appended here -->
+      <div class="gallery-dynamic" id="galleryDynamic"></div>
+    </div>
+  </section>
+
+  <!-- POSTS / NEWS -->
+  <section class="posts section" id="posts">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">آخر أخبارنا</span>
+        <h2>نصائح ومقالات</h2>
+        <p>معلومات مفيدة حول العناية بمكيفك في الأجواء العراقية.</p>
+      </div>
+      <div class="posts-grid" id="postsGrid">
+        <!-- Static posts -->
+        <article class="post-card">
+          <div class="post-meta">نصيحة · يونيو ٢٠٢٥</div>
+          <h3>كيف تحافظ على مكيفك في موسم الصيف العراقي؟</h3>
+          <p>ارتفاع درجات الحرارة الشديد في العراق يضع ضغطاً هائلاً على أجهزة التكييف. إليك أهم النصائح للحفاظ على كفاءة جهازك طوال الصيف...</p>
+          <a href="#" class="read-more">اقرأ المزيد ←</a>
+        </article>
+        <article class="post-card">
+          <div class="post-meta">معلومة · مايو ٢٠٢٥</div>
+          <h3>متى تعرف أن مكيفك يحتاج إلى إعادة ملء الغاز؟</h3>
+          <p>نقص غاز الفريون من أكثر أسباب ضعف التبريد شيوعاً. تعرف على العلامات التي تدل على أن جهازك يحتاج إلى إعادة الشحن...</p>
+          <a href="#" class="read-more">اقرأ المزيد ←</a>
+        </article>
+        <article class="post-card">
+          <div class="post-meta">نصيحة · أبريل ٢٠٢٥</div>
+          <h3>أهمية الصيانة الدورية قبل بدء موسم الحر</h3>
+          <p>الصيانة الوقائية قبل الصيف توفر عليك أضعاف تكلفتها في الأعطال المفاجئة. احجز صيانتك الآن قبل اكتظاظ المواعيد...</p>
+          <a href="#" class="read-more">اقرأ المزيد ←</a>
+        </article>
+      </div>
+      <!-- Dynamic posts from admin -->
+      <div class="posts-dynamic" id="postsDynamic"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">آراء عملائنا</span>
+        <h2>ماذا قالوا عنا؟</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"فريق محترف جداً، وصلوا في الموعد المحدد وأصلحوا المشكلة بسرعة. سعر معقول وخدمة ممتازة. سأتصل بهم مجدداً بدون تردد."</p>
+          <div class="reviewer">— أحمد محمد، بغداد</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"كنت أعاني من تسريب مياه من المكيف منذ أسابيع. تواصلت معهم وجاء الفني في نفس اليوم وحل المشكلة بشكل نهائي. شكراً جزيلاً!"</p>
+          <div class="reviewer">— أم حسين، الكوت</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"أنصح الجميع بخدمتهم، سعر الصيانة الدورية كان مناسباً جداً والفني شرح لي كيف أحافظ على الجهاز. استمروا هكذا."</p>
+          <div class="reviewer">— كريم عبدالله، البصرة</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">تواصل معنا</span>
+        <h2>احجز زيارتك الفنية الآن</h2>
+        <p>أرسل لنا تفاصيلك وسنتواصل معك في أقرب وقت ممكن.</p>
+      </div>
+      <div class="contact-wrap">
+        <div class="contact-form-wrap">
+          <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+            <div class="form-group">
+              <label>الاسم الكامل</label>
+              <input type="text" placeholder="محمد أحمد" required />
+            </div>
+            <div class="form-group">
+              <label>رقم الهاتف</label>
+              <input type="tel" placeholder="07X XXXX XXXX" required />
+            </div>
+            <div class="form-group">
+              <label>المحافظة / المنطقة</label>
+              <select required>
+                <option value="">اختر محافظتك</option>
+                <option>بغداد</option>
+                <option>البصرة</option>
+                <option>الموصل</option>
+                <option>أربيل</option>
+                <option>الكوت / واسط</option>
+                <option>النجف</option>
+                <option>كربلاء</option>
+                <option>الحلة</option>
+                <option>ذي قار</option>
+                <option>ميسان</option>
+                <option>محافظة أخرى</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>نوع الخدمة المطلوبة</label>
+              <select required>
+                <option value="">اختر الخدمة</option>
+                <option>تصليح عطل</option>
+                <option>تركيب مكيف جديد</option>
+                <option>صيانة دورية</option>
+                <option>تنظيف وتعقيم</option>
+                <option>استشارة فنية</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>تفاصيل المشكلة (اختياري)</label>
+              <textarea placeholder="اشرح لنا المشكلة أو أي تفاصيل مفيدة..."></textarea>
+            </div>
+            <button type="submit" class="cta-btn full-width">
+              <span>📨</span> أرسل طلبك
+            </button>
+          </form>
+          <div id="formSuccess" class="form-success" style="display:none">
+            ✅ تم استلام طلبك! سنتواصل معك قريباً.
+          </div>
+        </div>
+        <div class="contact-info">
+          <h3>معلومات التواصل</h3>
+          <div class="info-item">
+            <span class="info-icon">📞</span>
+            <div>
+              <div class="info-label">هاتف / واتساب</div>
+              <a href="tel:+9647XXXXXXXXX" class="info-value">+964 7XX XXX XXXX</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🕐</span>
+            <div>
+              <div class="info-label">ساعات العمل</div>
+              <div class="info-value">٧ صباحاً — ١٢ منتصف الليل<br/><small>٢٤/٧ للحالات الطارئة</small></div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+              <div class="info-label">التغطية</div>
+              <div class="info-value">جميع محافظات العراق</div>
+            </div>
+          </div>
+          <a href="https://wa.me/9647XXXXXXXXX" target="_blank" class="whatsapp-btn">
+            <span>💬</span> تواصل عبر واتساب
+          </a>
+          <div class="social-links">
+            <a href="#" class="social-link">فيسبوك</a>
+            <a href="#" class="social-link">إنستغرام</a>
+            <a href="#" class="social-link">يوتيوب</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-light">
+          <span class="logo-icon">❄</span>
+          <span class="logo-text">بـــارد</span>
+        </a>
+        <p>خدمة تصليح وصيانة مكيفات الهواء الأولى في العراق — سريعة، موثوقة، بأسعار مناسبة.</p>
+      </div>
+      <div class="footer-links">
+        <h4>روابط سريعة</h4>
+        <a href="#services">خدماتنا</a>
+        <a href="#gallery">معرض الأعمال</a>
+        <a href="#posts">المقالات</a>
+        <a href="#contact">تواصل معنا</a>
+        <a href="admin/index.html">لوحة الإدارة</a>
+      </div>
+      <div class="footer-services">
+        <h4>خدماتنا</h4>
+        <span>تصليح المكيفات</span>
+        <span>التركيب الاحترافي</span>
+        <span>الصيانة الدورية</span>
+        <span>تنظيف وتعقيم</span>
+        <span>طوارئ ٢٤ ساعة</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span>© ٢٠٢٥ بارد — جميع الحقوق محفوظة</span>
+        <span>تصليح مكيفات الهواء في العراق</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
